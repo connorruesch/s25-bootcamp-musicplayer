@@ -42,7 +42,7 @@ struct ContentView: View {
                         .foregroundStyle(.white)
                 }
                 .padding(20)
-                .background(LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.3), Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom))
+                .background(LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0.2), Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom))
                 
                 Spacer()
                 
