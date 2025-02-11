@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var musicProgress: Double = 40
     @State private var isPlaying: Bool = false
+    @State private var shuffleOn: Bool = true
+    @State private var repeatOn: Bool = true
     
     var body: some View {
         ZStack {
@@ -97,15 +99,21 @@ struct ContentView: View {
                     
                     // Media controls and icons
                     HStack {
-                        // Shuffle
-                        VStack {
-                            Image(systemName: "shuffle")
-                                .font(.title2)
-                                .foregroundStyle(.green)
-                            
-                            Circle()
-                                .fill(Color.green)
-                                .frame(width: 5, height: 5)
+                        // Shuffle Button
+                        Button(action: {
+                            shuffleOn.toggle()
+                        }) {
+                            VStack {
+                                Image(systemName: "shuffle")
+                                    .font(.title2)
+                                    .foregroundStyle(shuffleOn ? .green : .white)
+                                
+                                if shuffleOn {
+                                    Circle()
+                                        .fill(Color.green)
+                                        .frame(width: 5, height: 5)
+                                }
+                            }
                         }
                         
                         Spacer()
@@ -143,15 +151,22 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        // Repeat
-                        VStack {
-                            Image(systemName: "repeat")
-                                .font(.title2)
-                                .foregroundStyle(.green)
-                            
-                            Circle()
-                                .fill(Color.green)
-                                .frame(width: 5, height: 5)
+                        // Repeat Button
+                        Button(action: {
+                            repeatOn.toggle()
+                        }) {
+                            // Repeat
+                            VStack {
+                                Image(systemName: "repeat")
+                                    .font(.title2)
+                                    .foregroundStyle(repeatOn ? Color.green : Color.white)
+                                
+                                if repeatOn {
+                                    Circle()
+                                        .fill(Color.green)
+                                        .frame(width: 5, height: 5)
+                                }
+                            }
                         }
                     }
                     .padding(.bottom, 20)
