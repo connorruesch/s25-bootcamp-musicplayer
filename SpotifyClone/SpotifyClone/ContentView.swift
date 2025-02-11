@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var musicProgress: Double = 40
+    @State private var isPlaying: Bool = false
     
     var body: some View {
         ZStack {
@@ -53,7 +54,7 @@ struct ContentView: View {
                         Image(.odesza2)
                             .resizable()
                             .frame(width: 50, height: 50)
-                            .cornerRadius(3)
+                            .cornerRadius(5)
                         
                         VStack(alignment: .leading) {
                             Text("The Last Goodbye")
@@ -116,17 +117,22 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        // Pause button
-                        Circle()
-                            .fill(Color.white)
-                            .frame(width: 60, height: 60)
-                            .overlay(
-                                HStack {
-                                    Image(systemName: "pause")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                }
-                            )
+                        // Pause Button
+                        Button(action: {
+                            isPlaying.toggle()
+                        }) {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 60, height: 60)
+                                .overlay(
+                                    HStack {
+                                        Image(systemName: isPlaying ? "play.fill" : "pause")
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                            .foregroundStyle(.black)
+                                    }
+                                )
+                        }
                         
                         Spacer()
                         
