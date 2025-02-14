@@ -8,11 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var musicProgress: Double = 40
-    @State private var isPlaying: Bool = false
-    @State private var shuffleOn: Bool = true
-    @State private var repeatOn: Bool = true
-    
     var body: some View {
         ZStack {
             // Background image to mimic Spotify's "Canvas" feature ->
@@ -28,93 +23,23 @@ struct ContentView: View {
             VStack {
                 // HStack for the top bar -> contains album name, down
                 // arrow, etc.
-                HStack {
-                    Image(systemName: "chevron.down")
-                        .foregroundStyle(.white)
-                    
-                    Spacer()
-                    
-                    Text("The Last Goodbye")
-                        .font(.caption)
-                        .fontWeight(.medium)
-                        .foregroundStyle(.white)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "ellipsis")
-                        .foregroundStyle(.white)
-                }
-                .padding(20)
-                .background(LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0.2), Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom))
+                TopBarView(albumText: "The Last Goodbye")
                 
                 Spacer()
                 
                 // VStack for vertically aligning the bottom controls on the player
                 VStack {
                     // Album artwork, title, and like button
-                    HStack {
-                        Image(.odesza2)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(5)
-                        
-                        VStack(alignment: .leading) {
-                            Text("The Last Goodbye")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
-                            
-                            Text("ODESZA")
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.gray)
-                        }
-                        
-                        Spacer()
-                        
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.title)
-                            .foregroundColor(.green)
-                    }
-                    .padding(.bottom, 10)
+                    AlbumPreviewView(albumImage: "odesza_2", songTitle: "The Last Goodbye", artistName: "ODESZA")
+                    
                     
                     // Slider w/ media time stamps
-                    VStack {
-                        Slider(value: $musicProgress, in: 0...100)
-                            .controlSize(.mini)
-                            .accentColor(.white)
-                        
-                        HStack{
-                            Text("2:03")
-                                .font(.caption)
-                                .foregroundStyle(.gray)
-                            
-                            Spacer()
-                            
-                            Text("-3:39")
-                                .font(.caption)
-                                .foregroundStyle(.gray)
-                        }
-                    }
+                    MusicPlayerView()
                     
                     // Media controls and icons
                     HStack {
                         // Shuffle Button
-                        Button(action: {
-                            shuffleOn.toggle()
-                        }) {
-                            VStack {
-                                Image(systemName: "shuffle")
-                                    .font(.title2)
-                                    .foregroundStyle(shuffleOn ? .green : .white)
-                                
-                                if shuffleOn {
-                                    Circle()
-                                        .fill(Color.green)
-                                        .frame(width: 5, height: 5)
-                                }
-                            }
-                        }
+                        PlayerButtonView(icon: "shuffle")
                         
                         Spacer()
                         
@@ -126,21 +51,7 @@ struct ContentView: View {
                         Spacer()
                         
                         // Pause Button
-                        Button(action: {
-                            isPlaying.toggle()
-                        }) {
-                            Circle()
-                                .fill(Color.white)
-                                .frame(width: 60, height: 60)
-                                .overlay(
-                                    HStack {
-                                        Image(systemName: isPlaying ? "play.fill" : "pause")
-                                            .font(.title)
-                                            .fontWeight(.bold)
-                                            .foregroundStyle(.black)
-                                    }
-                                )
-                        }
+                        PausePlayButtonView()
                         
                         Spacer()
                         
@@ -152,38 +63,14 @@ struct ContentView: View {
                         Spacer()
                         
                         // Repeat Button
-                        Button(action: {
-                            repeatOn.toggle()
-                        }) {
-                            // Repeat
-                            VStack {
-                                Image(systemName: "repeat")
-                                    .font(.title2)
-                                    .foregroundStyle(repeatOn ? Color.green : Color.white)
-                                
-                                if repeatOn {
-                                    Circle()
-                                        .fill(Color.green)
-                                        .frame(width: 5, height: 5)
-                                }
-                            }
-                        }
+                        PlayerButtonView(icon: "repeat")
                     }
                     .padding(.bottom, 20)
                     
                     // Output controls and other icons
                     HStack {
                         // Audio/Output Icon
-                        HStack {
-                            Image(systemName: "airpods.pro")
-                                .font(.title3)
-                                .foregroundStyle(.green)
-                            
-                            Text("Connor's Airpods Pro")
-                                .font(.caption)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.green)
-                        }
+                        AudioOutputView(icon: "airpods.pro", title: "Connor's Airpods Pro")
                         
                         Spacer()
                         
